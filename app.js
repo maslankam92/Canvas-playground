@@ -1,31 +1,24 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
-ctx.fillStyle = '#BADA55';
-ctx.strokeStyle = 'tomato';
-ctx.lineCap = 'round';
+const COLORS = ['#e74c3c', '#1abc9c', '#3498db', '#2c3e50'];
+const SIZES = [10, 25, 50];
 
+const colorTools = document.querySelector('.color-tools');
+const sizeTools = document.querySelector('.size-tools');
 
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-function draw(e) {
-  if (isDrawing) {
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.x, e.y);
-    ctx.stroke();
-    console.log(e);
-  }
+function createColorsMarkup() {
+  colorTools.innerHTML = COLORS
+    .map(color => `<li data-color="${color}" style="background-color: ${color}"></li>`)
+    .join('');
 }
 
-canvas.addEventListener('mousedown', (e) => {
-  isDrawing = true;
-  [ lastX, lastY ] = [ e.]
-  console.log(e);
+function createSizeMarkup() {
+  sizeTools.innerHTML = SIZES
+    .map(size => `<li data-size="${size}" style="width: ${size}px; height: ${size}px"></li>`)
+    .join('');
 }
-  
-);
-canvas.addEventListener('mousemove', draw);
-canvas.addEventListener('mouseup', () => isDrawing = false);
-canvas.addEventListener('mouseout', () => isDrawing = false);
+
+createColorsMarkup();
+createSizeMarkup();
+
