@@ -37,7 +37,7 @@ function createSizeMarkup() {
       <li class="${currentSize === size ? 'current' : ''}"
         data-size="${size}" 
         onclick="changeSize(this.dataset.size)"
-        style="width: ${size}px; height: ${size}px">
+        style="width: ${size}px; height: ${size}px; background-color: ${currentColor}">
       </li>`)
     .join('');
 }
@@ -80,12 +80,19 @@ function stopDrawing() {
 }
 
 function changeColor(newColor) {
+  if (surpriseToolMode) {
+    resetToDefault();
+  }
   colorTools.querySelector(`li[data-color="${currentColor}"]`).classList.remove('current');
   colorTools.querySelector(`li[data-color="${newColor}"]`).classList.add('current');
   ctx.strokeStyle = currentColor = newColor;
+  createSizeMarkup();
 }
 
 function changeSize(newSize) {
+  if (surpriseToolMode) {
+    resetToDefault();
+  }
   sizeTools.querySelector(`li[data-size="${currentSize}"]`).classList.remove('current');
   sizeTools.querySelector(`li[data-size="${newSize}"]`).classList.add('current');
   ctx.lineWidth = currentSize = newSize;
@@ -93,11 +100,23 @@ function changeSize(newSize) {
 
 function setSurpriseTool() {
   surpriseToolMode = true;
-  console.log('dziala');
+  surpriseTool.classList.add('current');
+  sizeTools.querySelector(`li[data-size="${currentSize}"]`).classList.remove('current');
+  colorTools.querySelector(`li[data-color="${currentColor}"]`).classList.remove('current');
 }
 
 function clearCanvas() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function resetToDefault() {
+  surpriseToolMode = false;
+  ctx.strokeStyle = currentColor;
+  ctx.lineWidth = currentSize = SIZES[0];
+  surpriseTool.classList.remove('current');
+  colorTools.querySelector(`li[data-color="${currentColor}"]`).classList.add('current');
+  sizeTools.querySelector(`li[data-size="${currentSize}"]`).classList.add('current');
+  createSizeMarkup();
 }
 
 canvas.addEventListener('mousemove', keepDrawing);
