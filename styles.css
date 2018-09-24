@@ -33,9 +33,9 @@ canvas {
   margin-top: 10px;
 }
 
-.color-tools, .size-tools {
+.color-tools, .size-tools, .extra-tools {
   height: 100%;
-  width: 50%;
+  width: calc(100%/3);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,8 +52,32 @@ canvas {
   height: 50px;
 }
 
+.tools .current {
+  box-shadow: 0px 0px 20px 3px #555555;
+}
+
 .size-tools li {
   background-color: #2c3e50;
+}
+
+.extra-tools li {
+  border: 3px solid #2c3e50;
+  border-radius: 50%;
+  margin: 0 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.extra-tools .surprise {
+  background: radial-gradient(red , yellow, green, cyan, violet);
+}
+
+.extra-tools .clear {
+  font-family: sans-serif;
+  line-height: 50px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
 }
 
 
